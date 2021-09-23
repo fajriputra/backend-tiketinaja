@@ -14,10 +14,11 @@ module.exports = {
         location,
         dateStart,
         dateEnd,
-        time,
+        time: JSON.parse(time).join(", "),
       };
 
       const result = await scheduleModel.storeSchedule(data);
+      // .then((response) => ({ ...response, time: response.time.split(", ") }));
 
       return helpersWrapper.response(
         res,
@@ -145,7 +146,7 @@ module.exports = {
         location,
         dateStart,
         dateEnd,
-        time,
+        time: JSON.parse(time).join(", "),
         updatedAt: new Date(Date.now()),
       };
 
