@@ -20,7 +20,7 @@ module.exports = {
     new Promise((resolve, reject) => {
       connection.query(
         `SELECT * FROM schedule WHERE movieId LIKE "%${movieId}%" AND location LIKE "%${location}%" ORDER BY price ${sortType} LIMIT ? OFFSET ?`,
-        [limit, offset, movieId, location, sortType],
+        [limit, offset],
         (error, result) => {
           if (!error) {
             resolve(result);
@@ -33,7 +33,7 @@ module.exports = {
   getSingleSchedule: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM schedule WHERE id = ?",
+        `SELECT * FROM schedule WHERE id = ?`,
         id,
         (error, result) => {
           if (!error) {
@@ -77,7 +77,7 @@ module.exports = {
     }),
   deleteSchedule: (id) =>
     new Promise((resolve, reject) => {
-      connection.query("DELETE FROM schedule WHERE id = ?", id, (error) => {
+      connection.query(`DELETE FROM schedule WHERE id = ?`, id, (error) => {
         if (!error) {
           resolve(id);
         } else {

@@ -21,7 +21,7 @@ module.exports = {
     new Promise((resolve, reject) => {
       connection.query(
         `SELECT * FROM movie WHERE name LIKE "%${q}%" ORDER BY ${sortBy} ${sortType} LIMIT ? OFFSET ?`,
-        [limit, offset, q, sortBy, sortType],
+        [limit, offset],
         (error, result) => {
           if (!error) {
             resolve(result);
@@ -34,7 +34,7 @@ module.exports = {
   getSingleMovie: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM movie WHERE id = ?",
+        `SELECT * FROM movie WHERE id = ?`,
         id,
         (error, result) => {
           if (!error) {
@@ -78,7 +78,7 @@ module.exports = {
     }),
   deleteMovie: (id) =>
     new Promise((resolve, reject) => {
-      connection.query("DELETE FROM movie WHERE id = ?", id, (error) => {
+      connection.query(`DELETE FROM movie WHERE id = ?`, id, (error) => {
         if (!error) {
           resolve(id);
         } else {

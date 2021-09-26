@@ -47,73 +47,43 @@ module.exports = {
         }
       );
     }),
-  getAllFilter: (scheduleId) =>
+  getAllSeatBooking: (scheduleId, movieId, dateSchedule, timeSchedule) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT price FROM schedule WHERE id = ${scheduleId}`,
+        `SELECT id, seat FROM bookingseat WHERE scheduleId = "${scheduleId}" AND movieId = "${movieId}" AND dateSchedule = "${dateSchedule}" AND timeSchedule = "${timeSchedule}"`,
         (error, result) => {
           if (!error) {
-            resolve(result[0].price);
+            resolve(result);
           } else {
             reject(new Error(`SQL : ${error.sqlMessage}`));
           }
         }
       );
     }),
-  // getSeatBookingId: (scheduleId) =>
-  //   new Promise((resolve, reject) => {
-  //     connection.query(
-  //       `SELECT price FROM schedule WHERE id = ${scheduleId}`,
-  //       (error, result) => {
-  //         if (!error) {
-  //           resolve(result[0].price);
-  //         } else {
-  //           reject(new Error(`SQL : ${error.sqlMessage}`));
-  //         }
-  //       }
-  //     );
-  //   }),
+  getBookingById: (id) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, bs.seat FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId WHERE b.id = ${id}`,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(`SQL : ${error.sqlMessage}`));
+          }
+        }
+      );
+    }),
+  getBookingByUserId: (userId) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, bs.seat FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId WHERE b.userId = ${userId}`,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(`SQL : ${error.sqlMessage}`));
+          }
+        }
+      );
+    }),
 };
-
-// getSingleBooking: (id) =>
-//   new Promise((resolve, reject) => {
-//     connection.query(
-//       "SELECT * FROM booking WHERE id = ?",
-//       id,
-//       (error, result) => {
-//         if (!error) {
-//           resolve(result);
-//         } else {
-//           reject(new Error(`SQL : ${error.sqlMessage}`));
-//         }
-//       }
-//     );
-//   }),
-// updateBooking: (data, id) =>
-//   new Promise((resolve, reject) => {
-//     connection.query(
-//       "UPDATE booking SET ? WHERE id = ?",
-//       [data, id],
-//       (error) => {
-//         const newResult = {
-//           id,
-//           ...data,
-//         };
-//         if (!error) {
-//           resolve(newResult);
-//         } else {
-//           reject(new Error(`SQL : ${error.sqlMessage}`));
-//         }
-//       }
-//     );
-//   }),
-// deleteBooking: (id) =>
-//   new Promise((resolve, reject) => {
-//     connection.query("DELETE FROM booking WHERE id = ?", id, (error) => {
-//       if (!error) {
-//         resolve(id);
-//       } else {
-//         reject(new Error(`SQL : ${error.sqlMessage}`));
-//       }
-//     });
-//   }),
