@@ -44,10 +44,10 @@ module.exports = {
         }
       );
     }),
-  getCountSchedule: () =>
+  getCountSchedule: (movieId, location) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT COUNT(*) AS total FROM schedule",
+        `SELECT COUNT(*) AS total FROM schedule WHERE movieId LIKE "%${movieId}%" AND location LIKE "%${location}%"`,
         (error, result) => {
           if (!error) {
             resolve(result[0].total);

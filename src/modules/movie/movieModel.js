@@ -16,11 +16,11 @@ module.exports = {
         }
       });
     }),
-  getMovies: (limit, offset, q, sortBy, sortType) =>
+  getMovies: (limit, offset, keyword, sortBy, sortType) =>
     // eslint-disable-next-line consistent-return
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM movie WHERE name LIKE "%${q}%" ORDER BY ${sortBy} ${sortType} LIMIT ? OFFSET ?`,
+        `SELECT * FROM movie WHERE name LIKE "%${keyword}%" ORDER BY ${sortBy} ${sortType} LIMIT ? OFFSET ?`,
         [limit, offset],
         (error, result) => {
           if (!error) {
@@ -45,10 +45,10 @@ module.exports = {
         }
       );
     }),
-  getCountMovie: () =>
+  getCountMovie: (keyword) =>
     new Promise((resolve, reject) => {
       connection.query(
-        "SELECT COUNT(*) AS total FROM movie",
+        `SELECT COUNT(*) AS total FROM movie WHERE name LIKE "%${keyword}%"`,
         (error, result) => {
           if (!error) {
             resolve(result[0].total);

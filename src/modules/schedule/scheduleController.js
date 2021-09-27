@@ -46,15 +46,12 @@ module.exports = {
 
       let offset = page * limit - limit;
 
-      const totalData = await scheduleModel.getCountSchedule();
+      const totalData = await scheduleModel.getCountSchedule(movieId, location);
       const totalPage = Math.ceil(totalData / limit);
 
       if (totalPage < page) {
         offset = 0;
         page = 1;
-      } else if (totalData < limit) {
-        offset = 0;
-        limit = 3;
       }
 
       const pageInfo = { page, totalPage, limit, totalData };

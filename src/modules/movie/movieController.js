@@ -38,20 +38,19 @@ module.exports = {
   getMovies: async (req, res) => {
     try {
       // eslint-disable-next-line prefer-const
-      let { page, limit, q, sortBy, sortType } = req.query;
+      let { page, limit, keyword, sortBy, sortType } = req.query;
       page = Number(page) || 1;
       limit = Number(limit) || 3;
-      q = q || "";
+      keyword = keyword || "";
       sortBy = sortBy || "name";
       sortType = sortType || "asc";
 
-      let offset = page * limit - limit;
-      const totalData = await movieModel.getCountMovie();
+      const offset = page * limit - limit;
+      const totalData = await movieModel.getCountMovie(keyword);
       const totalPage = Math.ceil(totalData / limit);
 
       if (totalPage < page) {
-        offset = 0;
-        page = 1;
+        return helpersWrapper.response(res, 404, "page tidak ditemukan", null);
       }
 
       const pageInfo = {
@@ -64,7 +63,7 @@ module.exports = {
       const result = await movieModel.getMovies(
         limit,
         offset,
-        q,
+        keyword,
         sortBy,
         sortType
       );
@@ -73,7 +72,7 @@ module.exports = {
         return helpersWrapper.response(
           res,
           404,
-          `Data ${q} tidak ditemukan`,
+          `Data ${keyword} tidak ditemukan`,
           result,
           pageInfo
         );
