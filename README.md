@@ -121,6 +121,6 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
+AL FAJRI PUTRA PRATAMA - [@fjri.p](https://instagram.com/fjri.p)
 
-Project Link: [https://github.com/fajriputra/backend-tiketinaja](https://twitter.com/your_username)
+PROJECT LINK : [https://github.com/fajriputra/backend-tiketinaja]
