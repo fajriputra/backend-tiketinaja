@@ -31,6 +31,7 @@ after that the user can choose the seat to be occupied while watching and make p
 * Gopay
 * Dana
 * and much more..
+
 before getting a movie ticket.
 
 ### Built w/
