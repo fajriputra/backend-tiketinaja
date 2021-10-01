@@ -8,7 +8,6 @@ const xss = require("xss-clean");
 const helmet = require("helmet");
 const compression = require("compression");
 
-// router navigasi
 const routerNavigation = require("./routes");
 
 const app = express();
@@ -22,6 +21,7 @@ app.use(helmet());
 app.use(compression());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(express.static("public"));
 
 app.use("/", routerNavigation);
 app.use("/*", (req, res) => {

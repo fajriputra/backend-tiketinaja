@@ -1,5 +1,6 @@
 const scheduleModel = require("./scheduleModel");
 const helpersWrapper = require("../../helpers/wrapper");
+const redisConnection = require("../../config/redis");
 
 module.exports = {
   storeSchedule: async (req, res) => {
@@ -14,7 +15,7 @@ module.exports = {
         location,
         dateStart,
         dateEnd,
-        time: JSON.parse(time).join(", "),
+        time,
       };
 
       const result = await scheduleModel.storeSchedule(data);
@@ -73,11 +74,25 @@ module.exports = {
         );
       }
 
+      const newResult = result.map((item) => {
+        const newData = {
+          ...item,
+          time: item.time.split(","),
+        };
+        return newData;
+      });
+
+      redisConnection.setex(
+        `getSchedule:${JSON.stringify(req.query)}`,
+        3600,
+        JSON.stringify({ newResult, pageInfo })
+      );
+
       return helpersWrapper.response(
         res,
         200,
         "Success getting data",
-        result,
+        newResult,
         pageInfo
       );
     } catch (error) {
@@ -103,11 +118,25 @@ module.exports = {
         );
       }
 
+      const newResult = result.map((item) => {
+        const newData = {
+          ...item,
+          time: item.time.split(","),
+        };
+        return newData;
+      });
+
+      redisConnection.setex(
+        `getSchedule:${id}`,
+        3600,
+        JSON.stringify(newResult)
+      );
+
       return helpersWrapper.response(
         res,
         200,
         "Success get single schedule",
-        result
+        newResult
       );
     } catch (error) {
       return helpersWrapper.response(

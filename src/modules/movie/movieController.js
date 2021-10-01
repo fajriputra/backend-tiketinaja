@@ -1,5 +1,7 @@
 const movieModel = require("./movieModel");
 const helpersWrapper = require("../../helpers/wrapper");
+const redisConnection = require("../../config/redis");
+const deleteFile = require("../../helpers/uploads/deleteFile");
 
 module.exports = {
   storeMovies: async (req, res) => {
@@ -22,7 +24,9 @@ module.exports = {
         director,
         duration,
         synopsis,
+        image: req.file ? req.file.filename : null,
       };
+
       const result = await movieModel.storeMovies(data);
 
       return helpersWrapper.response(res, 200, "Success create data", result);
@@ -45,12 +49,13 @@ module.exports = {
       sortBy = sortBy || "name";
       sortType = sortType || "asc";
 
-      const offset = page * limit - limit;
+      let offset = page * limit - limit;
       const totalData = await movieModel.getCountMovie(keyword);
       const totalPage = Math.ceil(totalData / limit);
 
       if (totalPage < page) {
-        return helpersWrapper.response(res, 404, "page tidak ditemukan", null);
+        offset = 0;
+        page = 1;
       }
 
       const pageInfo = {
@@ -78,11 +83,26 @@ module.exports = {
         );
       }
 
+      const newResult = result.map((item) => {
+        const newData = {
+          ...item,
+          category: item.category.split(","),
+          cast: item.cast.split(","),
+        };
+        return newData;
+      });
+
+      redisConnection.setex(
+        `getMovie:${JSON.stringify(req.query)}`,
+        3600,
+        JSON.stringify({ newResult, pageInfo })
+      );
+
       return helpersWrapper.response(
         res,
         200,
         "Success getting data",
-        result,
+        newResult,
         pageInfo
       );
     } catch (error) {
@@ -107,11 +127,24 @@ module.exports = {
           null
         );
       }
+
+      const newResult = result.map((item) => {
+        const newData = {
+          ...item,
+          category: item.category.split(","),
+          cast: item.cast.split(","),
+        };
+        return newData;
+      });
+
+      // proses menyimpan data ke redis
+      redisConnection.setex(`getMovie:${id}`, 3600, JSON.stringify(newResult));
+
       return helpersWrapper.response(
         res,
         200,
         "Success get single movie",
-        result
+        newResult
       );
     } catch (error) {
       return helpersWrapper.response(
@@ -154,6 +187,7 @@ module.exports = {
         director,
         duration,
         synopsis,
+        image: req.file ? req.file.filename : null,
         updatedAt: new Date(Date.now()),
       };
 
@@ -163,7 +197,12 @@ module.exports = {
         }
       });
 
+      // if (req.file && checkId[0].image) {
+      // }
+      deleteFile(`public/uploads/movie/${checkId[0].image}`);
+
       const result = await movieModel.updateMovie(data, id);
+
       return helpersWrapper.response(res, 200, "Success update data", result);
     } catch (error) {
       return helpersWrapper.response(
@@ -187,7 +226,10 @@ module.exports = {
           null
         );
       }
+
+      deleteFile(`public/uploads/movie/${checkId[0].image}`);
       const result = await movieModel.deleteMovie(id);
+
       return helpersWrapper.response(res, 200, "Success delete data", result);
     } catch (error) {
       return helpersWrapper.response(
