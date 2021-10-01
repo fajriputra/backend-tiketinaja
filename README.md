@@ -8,6 +8,7 @@
         <li><a href="#built-with">Built With</a></li>
       </ul>
     </li>
+    <li><a href="#features">Features</a></li>
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
@@ -33,6 +34,10 @@ after that the user can choose the seat to be occupied while watching and make p
 * and much more..
 
 before getting a movie ticket.
+
+## Features
+
+
 
 ### Built with
 
