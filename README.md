@@ -123,4 +123,4 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Your Name - [@your_twitter](https://twitter.com/your_username) - email@example.com
 
-Project Link: [https://github.com/fajriputra/backend-tiketinaja]
+Project Link: [https://github.com/fajriputra/backend-tiketinaja](https://twitter.com/your_username)
