@@ -86,4 +86,23 @@ module.exports = {
         }
       );
     }),
+  getStatusTicket: (status, id) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "UPDATE booking SET statusTicket = ? WHERE id = ?",
+        [status, id],
+        (error) => {
+          const newResult = {
+            id,
+            status,
+          };
+
+          if (!error) {
+            resolve(newResult);
+          } else {
+            reject(new Error(`SQL : ${error.sqlMessage}`));
+          }
+        }
+      );
+    }),
 };

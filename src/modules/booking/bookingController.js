@@ -161,4 +161,21 @@ module.exports = {
       );
     }
   },
+  getStatusTicket: async (req, res) => {
+    try {
+      const { id } = req.params;
+
+      const status = "Ticket used";
+      const result = await bookingModel.getStatusTicket(status, id);
+
+      return helpersWrapper.response(res, 200, "Ticket already used", result);
+    } catch (error) {
+      return helpersWrapper.response(
+        res,
+        400,
+        `Bad request : ${error.message}`,
+        null
+      );
+    }
+  },
 };

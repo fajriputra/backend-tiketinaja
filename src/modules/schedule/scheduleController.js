@@ -69,7 +69,7 @@ module.exports = {
         return helpersWrapper.response(
           res,
           404,
-          `Data yang kamu cari tidak ditemukan`,
+          "Data yang kamu cari tidak ditemukan",
           null
         );
       }
