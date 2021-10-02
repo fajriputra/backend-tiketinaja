@@ -34,10 +34,6 @@ after that the user can choose the seat to be occupied while watching and make p
 
 before getting a movie ticket.
 
-## Features
-
-
-
 ### Built with
 
 To build a project that I created requires several dependencies / packages, such as:
