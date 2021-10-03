@@ -53,6 +53,10 @@ To build a project that I created requires several dependencies / packages, such
 * [uuid](https://www.npmjs.com/package/uuid)
 * [xss-clean](https://www.npmjs.com/package/xss-clean)
 
+## Postman Documentation 
+
+- Postman Documentation click [here](https://documenter.getpostman.com/view/14847832/UUy3A6tf)
+
 ## Getting Started
 
 This is an example of how you may give instructions on setting up your project locally.
@@ -60,16 +64,15 @@ To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
-1. Get a free API Key at [Documentation Postman](https://documenter.getpostman.com/view/14847832/UUy3A6tf)
-2. Clone the repo
+1. Clone the repo
    ```sh
    git clone https://github.com/fajriputra/backend-tiketinaja.git
    ```
-3. Install NPM packages
+2. Install NPM packages
    ```sh
    npm install
    ```
-4. Enter your API in `config.js`
+3. Enter your API in `config.js`
    ```JS
    const API_KEY = 'ENTER YOUR API';
    ```
