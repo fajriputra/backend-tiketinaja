@@ -58,7 +58,7 @@ To build a project that I created requires several dependencies / packages, such
 
 ## Database MySQL
 
-- Database [here](https://github.com/fajriputra/backend-tiketinaja/blob/main/ticketing.sql)
+- Just click on this [link](https://github.com/fajriputra/backend-tiketinaja/blob/main/ticketing.sql) to see
 
 ## Getting Started
 
