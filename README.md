@@ -57,6 +57,10 @@ To build a project that I created requires several dependencies / packages, such
 
 - Just click on this [link](https://documenter.getpostman.com/view/14847832/UUy3A6tf) to see more docs
 
+## Database MySQL
+
+- Database [here](https://github.com/fajriputra/backend-tiketinaja/blob/main/ticketing.sql)
+
 ## Getting Started
 
 ### Installation
