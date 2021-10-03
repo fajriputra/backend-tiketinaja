@@ -58,17 +58,9 @@ To build a project that I created requires several dependencies / packages, such
 This is an example of how you may give instructions on setting up your project locally.
 To get a local copy up and running follow these simple example steps.
 
-### Prerequisites
-
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
-
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Get a free API Key at [Documentation Postman](https://documenter.getpostman.com/view/14847832/UUy3A6tf)
 2. Clone the repo
    ```sh
    git clone https://github.com/fajriputra/backend-tiketinaja.git
