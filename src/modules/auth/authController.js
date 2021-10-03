@@ -6,7 +6,11 @@ const helpersWrapper = require("../../helpers/wrapper");
 const authModel = require("./authModel");
 const redisConnection = require("../../config/redis");
 
-const validateEmail = require("../../helpers/emailRe");
+const {
+  validateEmail,
+  // createActivationToken,
+  // createAccessToken,
+} = require("../../helpers/auth");
 
 module.exports = {
   register: async (req, res) => {
