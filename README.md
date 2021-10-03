@@ -55,12 +55,9 @@ To build a project that I created requires several dependencies / packages, such
 
 ## Postman Documentation 
 
-- Postman Documentation click [here](https://documenter.getpostman.com/view/14847832/UUy3A6tf)
+- Just click on this [link](https://documenter.getpostman.com/view/14847832/UUy3A6tf) to see more docs
 
 ## Getting Started
-
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
 
 ### Installation
 
@@ -68,13 +65,13 @@ To get a local copy up and running follow these simple example steps.
    ```sh
    git clone https://github.com/fajriputra/backend-tiketinaja.git
    ```
-2. Install NPM packages
+2. Install all packages on this project with the command below 
    ```sh
    npm install
    ```
-3. Enter your API in `config.js`
-   ```JS
-   const API_KEY = 'ENTER YOUR API';
+3. Then, you can running this project with the command below 
+   ```
+   npm run dev
    ```
    
 <!-- CONTACT -->
