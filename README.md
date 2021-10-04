@@ -1,5 +1,5 @@
 <!-- TITTLE -->
-<h1 style="text-center"> === API TICKETING === </h1>
+<h1> === API TICKETING === </h1>
 
 
 <!-- TABLE OF CONTENTS -->
