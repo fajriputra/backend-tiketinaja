@@ -11,7 +11,6 @@
     <li>
       <a href="#getting-started">Getting Started</a>
       <ul>
-        <li><a href="#prerequisites">Prerequisites</a></li>
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
@@ -55,7 +54,11 @@ To build a project that I created requires several dependencies / packages, such
 
 ## Postman Documentation 
 
-- Just click on this [link](https://documenter.getpostman.com/view/14847832/UUy3A6tf) to see more docs
+- Just click on this [link](https://documenter.getpostman.com/view/14847832/UUy3A6tf) to see our docs
+
+## Database MySQL
+
+- Just click on this [link](https://github.com/fajriputra/backend-tiketinaja/blob/main/ticketing.sql) to see our database
 
 ## Getting Started
 
@@ -79,4 +82,4 @@ To build a project that I created requires several dependencies / packages, such
 
 AL FAJRI PUTRA PRATAMA - [@fjri.p](https://instagram.com/fjri.p)
 
-PROJECT LINK : [https://github.com/fajriputra/backend-tiketinaja]
+PROJECT LINK [here](https://github.com/fajriputra/backend-tiketinaja)
