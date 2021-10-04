@@ -197,9 +197,9 @@ module.exports = {
         }
       });
 
-      // if (req.file && checkId[0].image) {
-      // }
-      deleteFile(`public/uploads/movie/${checkId[0].image}`);
+      if (req.file && checkId[0].image) {
+        deleteFile(`public/uploads/movie/${checkId[0].image}`);
+      }
 
       const result = await movieModel.updateMovie(data, id);
 

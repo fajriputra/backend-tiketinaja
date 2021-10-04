@@ -13,4 +13,8 @@ const createActivationToken = (payload) =>
 const createAccessToken = (payload) =>
   jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30m" });
 
-module.exports = { validateEmail, createActivationToken, createAccessToken };
+module.exports = {
+  validateEmail,
+  createActivationToken,
+  createAccessToken,
+};
