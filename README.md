@@ -1,3 +1,7 @@
+<!-- TITTLE -->
+<h1> === API TICKETING === </h1>
+
+
 <!-- TABLE OF CONTENTS -->
 <details open="open">
   <summary>Table of Contents</summary>
@@ -72,7 +76,16 @@ To build a project that I created requires several dependencies / packages, such
    ```sh
    npm install
    ```
-3. Then, you can running this project with the command below 
+3. And you can configuration environment `.env`
+   ```sh
+   DB_HOST = "YOUR HOST",
+   DB_USER = "YOUR USER DB",
+   DB_PASS = "YOUR PASSWORD DB",
+   DB_NAME = "YOUR NAME DATABASE",
+   PORT = "RUNNING PORT",
+   SECRETKEY = "YOUR KEY"
+   ```
+5. Then, you can running this project with the command below 
    ```
    npm run dev
    ```
