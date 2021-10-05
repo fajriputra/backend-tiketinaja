@@ -11,7 +11,7 @@ const compression = require("compression");
 const routerNavigation = require("./routes");
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3001;
 
 app.use(morgan("dev"));
 app.use(cors());
