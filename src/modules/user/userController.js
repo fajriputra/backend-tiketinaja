@@ -123,7 +123,9 @@ module.exports = {
         updatedAt: new Date(Date.now()),
       };
 
-      deleteFile(`public/uploads/user/${checkUser[0].avatar}`);
+      if (req.file && checkUser[0].avatar) {
+        deleteFile(`public/uploads/user/${checkUser[0].avatar}`);
+      }
 
       const result = await userModel.updateUser(data, id);
 

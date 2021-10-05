@@ -227,7 +227,10 @@ module.exports = {
         );
       }
 
-      deleteFile(`public/uploads/movie/${checkId[0].image}`);
+      if (req.file && checkId[0].image) {
+        deleteFile(`public/uploads/movie/${checkId[0].image}`);
+      }
+
       const result = await movieModel.deleteMovie(id);
 
       return helpersWrapper.response(res, 200, "Success delete data", result);
