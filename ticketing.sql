@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2021 at 04:13 PM
+-- Generation Time: Oct 05, 2021 at 04:24 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -38,7 +38,7 @@ CREATE TABLE `booking` (
   `totalPayment` int(11) NOT NULL,
   `paymentMethod` varchar(100) NOT NULL,
   `statusPayment` varchar(100) NOT NULL,
-  `statusTicket` varchar(100) NOT NULL,
+  `statusTicket` enum('Active','notActive') NOT NULL DEFAULT 'Active',
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -48,9 +48,10 @@ CREATE TABLE `booking` (
 --
 
 INSERT INTO `booking` (`id`, `userId`, `dateBooking`, `timeBooking`, `movieId`, `scheduleId`, `totalTicket`, `totalPayment`, `paymentMethod`, `statusPayment`, `statusTicket`, `createdAt`, `updatedAt`) VALUES
-(23, 1, '2021-10-02', '10:30:00', 32, 28, 3, 90000, 'Google Pay', 'success', 'Ticket used', '2021-09-29 16:25:58', NULL),
-(24, 2, '2021-10-03', '12:00:00', 34, 29, 3, 105000, 'Gopay', 'success', 'Ticket used', '2021-09-29 16:30:47', NULL),
-(25, 1, '2021-10-04', '08:30:00', 37, 32, 3, 135000, 'Ovoo', 'success', 'Ticket used', '2021-10-01 13:59:29', NULL);
+(23, 1, '2021-10-02', '10:30:00', 32, 28, 3, 90000, 'Google Pay', 'success', 'Active', '2021-09-29 16:25:58', NULL),
+(24, 2, '2021-10-03', '12:00:00', 34, 29, 3, 105000, 'Gopay', 'success', 'Active', '2021-09-29 16:30:47', NULL),
+(25, 1, '2021-10-04', '08:30:00', 37, 32, 3, 135000, 'Ovoo', 'success', 'Active', '2021-10-01 13:59:29', NULL),
+(26, 1, '2021-10-04', '08:30:00', 37, 32, 3, 135000, 'Ovoo', 'success', 'Active', '2021-10-05 13:10:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -83,7 +84,10 @@ INSERT INTO `bookingseat` (`id`, `bookingId`, `scheduleId`, `movieId`, `dateSche
 (51, 24, 29, 34, '2021-10-03', '12:00:00', 'A6', '2021-09-29 16:30:47', NULL),
 (52, 25, 32, 37, '2021-10-04', '08:30:00', 'B1', '2021-10-01 13:59:29', NULL),
 (53, 25, 32, 37, '2021-10-04', '08:30:00', 'B2', '2021-10-01 13:59:29', NULL),
-(54, 25, 32, 37, '2021-10-04', '08:30:00', 'B3', '2021-10-01 13:59:29', NULL);
+(54, 25, 32, 37, '2021-10-04', '08:30:00', 'B3', '2021-10-01 13:59:29', NULL),
+(55, 26, 32, 37, '2021-10-04', '08:30:00', 'B1', '2021-10-05 13:10:34', NULL),
+(56, 26, 32, 37, '2021-10-04', '08:30:00', 'B2', '2021-10-05 13:10:34', NULL),
+(57, 26, 32, 37, '2021-10-04', '08:30:00', 'B3', '2021-10-05 13:10:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -122,7 +126,7 @@ INSERT INTO `movie` (`id`, `name`, `category`, `image`, `releaseDate`, `cast`, `
 (42, 'Birds of Paradise', 'Drama', '2021-09-29T12-44-52.339ZBirds Of Paradise.jpg', '2021-09-23', 'Diana Silvers,Kristine Froseth,Eva Lomby,Jacqueline Bisset,Solomon Golding,Daniel Camargo', 'Sarah Adina Smith', '1 hours 53 minutes', 'Two dancers at an elite ballet academy in Paris must compete for a contract to join the highly coveted Opéra National de Paris as they confront their competitive nature, sexual awakenings and how far they would go to win.', '2021-09-29 12:44:52', NULL),
 (43, 'Black Widow', 'Action,Adventure,Thriller,Science Fiction', '2021-09-29T12-50-01.104ZBlack Widow.jpg', '2021-07-07', 'Scarlett Johansson,Florence Pugh,Rachel Weisz,David Harbour,Ray Winstone,Olga Kurylenko', 'Cate Shortland', '2 hours 14 minutes', 'Natasha Romanoff, also known as Black Widow, confronts the darker parts of her ledger when a dangerous conspiracy with ties to her past arises. Pursued by a force that will stop at nothing to bring her down, Natasha must deal with her history as a spy and', '2021-09-29 12:50:01', '2021-09-29 14:20:01'),
 (48, 'The Tomorrow War', 'Action,Adventure,Science Fiction', '2021-09-29T14-18-35.130ZThe Tomrrow War.jpg', '2021-07-02', 'Chris Pratt, Yvonne Strahovski,J.K. Simmons,Betty Gilpin,Sam Richardson,Edwin Hodge', 'Chris McKay', '2 hours 18 minutes', 'The world is stunned when a group of time travelers arrive from the year 2051 to deliver an urgent message: Thirty years in the future, mankind is losing a global war against a deadly alien species. The only hope for survival is for soldiers and civilians', '2021-09-29 14:18:35', NULL),
-(77, 'asdcccc', 'asdasd', NULL, '2021-07-02', 'cxcb', 'dvbxcv', '2 hours 18 minutes', 'lorem', '2021-10-03 14:06:21', NULL);
+(83, 'Black Wasd', 'asdasd', '2021-10-04T04-44-34.948Zthe starling.jpg', '2021-07-02', 'cxcb', 'dvbxcv', '2 hours 18 minutes', 'lorem', '2021-10-04 04:44:02', '2021-10-04 04:45:08');
 
 -- --------------------------------------------------------
 
@@ -185,9 +189,10 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `avatar`, `role`, `createdAt`, `updatedAt`) VALUES
+('4e0a6f1f-284d-48bd-911e-8dd4011b7114', 'fajri', 'putra', 'pratamafajri2@gmail.com', '$2b$12$pL9f1X2B6Nf57DB6eVBxsOh5StgLREx/yMyMGTjmy3f4TyC8NIo1W', '123456789', '2021-10-04T04-42-25.576Zfoundation.jpg', 'user', '2021-10-04 04:36:56', '2021-10-04 04:42:25'),
 ('7cff6ccd-d5e5-4dce-b17f-aa5cf522e67c', 'pratama', 'fajri', 'pratamafajri@gmail.com', '$2b$12$2pSmBlYY7iWu/u./6wH/HOOMwZzNFbvYMvNAiGAmGtbBXH4Sl0dem', '123456789', '2021-10-02T11-07-11.671ZSquid Game.jpg', 'user', '2021-10-02 11:03:51', '2021-10-02 11:07:11'),
 ('dca3beb5-d8d4-4cce-81ee-76d89bef3f83', 'fajriz', 'putraz', 'fajri@gmail.com', '$2b$12$u2JPUfUgetK3W3/DncA7yeMNzkNslU.GC.9mpkZphKvci899JYJkq', '123456789', NULL, 'user', '2021-10-01 08:01:29', '2021-10-01 08:03:51'),
-('e0d218f9-a90f-4a7b-a358-3bd0b40f4d45', 'fajrees', 'putrez', 'admin3@gmail.com', '$2b$12$Rx7A7bnPb5p4qc31jl9/AurW8mKiqCyF5RxFWh92xUNJ1vGGfNfHm', '9876335563', '2021-10-01T12-01-18.736ZBirds Of Paradise.jpg', 'admin', '2021-09-29 14:55:31', '2021-10-01 13:18:48'),
+('e0d218f9-a90f-4a7b-a358-3bd0b40f4d45', 'fajrees', 'putrez', 'admin@gmail.com', '$2b$12$Rx7A7bnPb5p4qc31jl9/AurW8mKiqCyF5RxFWh92xUNJ1vGGfNfHm', '9876335563', '2021-10-04T01-54-53.284Zfoundation.jpg', 'admin', '2021-09-29 14:55:31', '2021-10-04 01:54:53'),
 ('f825b6d0-f52a-455d-89b1-46f81668966b', 'fajri', 'putra', 'fajriputra@gmail.com', '$2b$12$u.B.vvfbJd5kOL/V8GERXuOZyjAPISMi7K0uNYoD1HHqvK/1tDCtO', '9876627371', '2021-10-01T08-42-03.354Zfree guy.jpg', 'user', '2021-09-29 14:54:26', '2021-10-01 13:56:55');
 
 --
@@ -232,19 +237,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `bookingseat`
 --
 ALTER TABLE `bookingseat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=84;
 
 --
 -- AUTO_INCREMENT for table `schedule`

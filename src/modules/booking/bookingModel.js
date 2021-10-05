@@ -86,15 +86,15 @@ module.exports = {
         }
       );
     }),
-  getStatusTicket: (status, id) =>
+  getStatusTicket: (data, id) =>
     new Promise((resolve, reject) => {
       connection.query(
         "UPDATE booking SET statusTicket = ? WHERE id = ?",
-        [status, id],
+        [data, id],
         (error) => {
           const newResult = {
             id,
-            status,
+            data,
           };
 
           if (!error) {

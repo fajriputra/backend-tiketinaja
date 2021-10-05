@@ -165,10 +165,18 @@ module.exports = {
     try {
       const { id } = req.params;
 
-      const status = "Ticket used";
-      const result = await bookingModel.getStatusTicket(status, id);
+      const checkTicket = await bookingModel.getBookingById(id);
+      if (!checkTicket.length) {
+        return helpersWrapper.response(res, 404, "Data tidak ditemukan", null);
+      }
 
-      return helpersWrapper.response(res, 200, "Ticket already used", result);
+      if (checkTicket[0].statusTicket !== "Active") {
+        return helpersWrapper.response(res, 400, "Ticket already used", null);
+      }
+
+      const result = await bookingModel.getStatusTicket("notActive", id);
+
+      return helpersWrapper.response(res, 200, "Success use ticket", result);
     } catch (error) {
       return helpersWrapper.response(
         res,
