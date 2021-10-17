@@ -84,6 +84,15 @@ To build a project that I created requires several dependencies / packages, such
    DB_NAME = "YOUR NAME DATABASE",
    PORT = "RUNNING PORT",
    SECRETKEY = "YOUR KEY"
+   SENDERMAIL = "YOUR MAIL"
+   PASSMAIL = "YOUR PASS MAIL"
+   ACTIVATION_TOKEN_SECRET = "YOUR TOKEN KEY"
+   MIDTRANS_PRODUCTION = "PROD/DEV"
+   MIDTRANS_CLIENTKEY = "YOUR KEY"
+   MIDTRANS_SERVERKEY = "YOUR KEY"
+   REDIS_HOSTNAME = "YOUR HOST"
+   REDIS_PORT = "YOUR PORT"
+   REDIS_PASSWORD = "YOUR PASSWORD"
    ```
 5. Then, you can running this project with the command below 
    ```
