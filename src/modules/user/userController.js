@@ -1,5 +1,5 @@
 const bcrypt = require("bcrypt");
-const validateEmail = require("../../helpers/emailRe");
+const { validateEmail } = require("../../helpers/auth");
 const helpersWrapper = require("../../helpers/wrapper");
 const deleteFile = require("../../helpers/uploads/deleteFile");
 

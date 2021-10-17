@@ -16,6 +16,20 @@ module.exports = {
         }
       });
     }),
+  activateEmail: (data) =>
+    new Promise((resolve, reject) => {
+      connection.query(
+        "UPDATE user SET statusUser = ?",
+        data,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            reject(new Error(`SQL : ${error.sqlMessage}`));
+          }
+        }
+      );
+    }),
   getUserByEmail: (email) =>
     new Promise((resolve, reject) => {
       connection.query(

@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+require("dotenv").config();
 
 const validateEmail = (email) => {
   const re =
@@ -10,11 +11,7 @@ const validateEmail = (email) => {
 const createActivationToken = (payload) =>
   jwt.sign(payload, process.env.ACTIVATION_TOKEN_SECRET, { expiresIn: "15m" });
 
-const createAccessToken = (payload) =>
-  jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, { expiresIn: "30m" });
-
 module.exports = {
   validateEmail,
   createActivationToken,
-  createAccessToken,
 };

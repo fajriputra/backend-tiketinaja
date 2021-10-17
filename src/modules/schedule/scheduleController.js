@@ -38,6 +38,7 @@ module.exports = {
   getSchedule: async (req, res) => {
     try {
       // eslint-disable-next-line prefer-const
+      // - get by date
       let { page, limit, movieId, location, sortType } = req.query;
       page = Number(page) || 1;
       limit = Number(limit) || 3;

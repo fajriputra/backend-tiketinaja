@@ -6,24 +6,14 @@ const helpersWrapper = require("../../helpers/wrapper");
 const authModel = require("./authModel");
 const redisConnection = require("../../config/redis");
 
-const {
-  validateEmail,
-  // createActivationToken,
-  // createAccessToken,
-} = require("../../helpers/auth");
+const { validateEmail, createActivationToken } = require("../../helpers/auth");
+const sendMail = require("../../helpers/email");
 
 module.exports = {
   register: async (req, res) => {
     try {
-      const {
-        firstName,
-        lastName,
-        email,
-        password,
-        phoneNumber,
-        avatar,
-        // role,
-      } = req.body;
+      const { firstName, lastName, email, password, phoneNumber, avatar } =
+        req.body;
 
       if (!firstName || !lastName || !email || !password || !phoneNumber) {
         return helpersWrapper.response(res, 400, "Field must be filled", null);
@@ -60,24 +50,79 @@ module.exports = {
 
       const hashPassword = bcrypt.hashSync(password, 12);
 
+      const othersId = uuidv4();
       const setData = {
-        id: uuidv4(),
+        id: othersId,
         firstName,
         lastName,
         email,
         password: hashPassword,
         phoneNumber,
         avatar,
-        // role,
       };
 
-      const result = await authModel.register(setData);
+      const activation = createActivationToken(setData);
+
+      const setDataEmail = {
+        to: email,
+        subject: "Email Verification",
+        template: "email-verification",
+        data: {
+          firstname: `${firstName} ${lastName}`,
+          email,
+          url: `http://localhost:3001/auth/activation/${activation}`,
+        },
+      };
+
+      await sendMail(setDataEmail);
 
       return helpersWrapper.response(
         res,
         200,
-        "Register telah berhasil",
-        result
+        "Register is successful! Please check your email to activation"
+      );
+    } catch (error) {
+      return helpersWrapper.response(res, 400, `SQL : ${error.message}`, null);
+    }
+  },
+  activateEmail: async (req, res) => {
+    try {
+      const { activateToken } = req.body;
+
+      jwt.verify(
+        activateToken,
+        process.env.ACTIVATION_TOKEN_SECRET,
+        async (error, result) => {
+          if (error) {
+            return helpersWrapper.response(
+              res,
+              403,
+              "Token has expired, please re-register",
+              null
+            );
+          }
+
+          req.decodeToken = result;
+
+          const setData = {
+            id: result.id,
+            firstName: result.firstName,
+            lastName: result.lastName,
+            email: result.email,
+            password: result.password,
+            phoneNumber: result.phoneNumber,
+          };
+
+          const newResult = await authModel.register(setData);
+
+          await authModel.activateEmail("Active");
+          return helpersWrapper.response(
+            res,
+            200,
+            "Your account has been activation",
+            newResult
+          );
+        }
       );
     } catch (error) {
       return helpersWrapper.response(res, 400, `SQL : ${error.message}`, null);
@@ -125,6 +170,15 @@ module.exports = {
         );
       }
 
+      if (checkUser[0].statusUser !== "Active") {
+        return helpersWrapper.response(
+          res,
+          400,
+          `Please activate your account`,
+          null
+        );
+      }
+
       // proses utama membuat token dengan JWT
       const payload = checkUser[0];
       delete payload.password;
@@ -133,9 +187,62 @@ module.exports = {
         expiresIn: "24h",
       });
 
+      // refresh token
+      const refreshToken = jwt.sign({ ...payload }, process.env.SECRETKEY, {
+        expiresIn: "72h",
+      });
+
       return helpersWrapper.response(res, 200, "Success login", {
         id: payload.id,
         token,
+        refreshToken,
+      });
+    } catch (error) {
+      return helpersWrapper.response(res, 400, `SQL : ${error.message}`, null);
+    }
+  },
+
+  refreshToken: async (req, res) => {
+    try {
+      const { refreshToken } = req.body;
+
+      redisConnection.get(`refreshToken:${refreshToken}`, (error, result) => {
+        if (!error && result !== null) {
+          return helpersWrapper.response(
+            res,
+            403,
+            "Your refresh token cannot be use"
+          );
+        }
+
+        jwt.verify(refreshToken, process.env.SECRETKEY, (err, result) => {
+          if (!err) {
+            return helpersWrapper.response(res, 403, err.message);
+          }
+
+          delete result.iat;
+          delete result.exp;
+
+          const token = jwt.sign(result, process.env.SECRETKEY, {
+            expiresIn: "24h",
+          });
+
+          const newRefreshToken = jwt.sign(result, process.env.SECRETKEY, {
+            expiresIn: "72h",
+          });
+
+          redisConnection.setex(
+            `refreshToken:${refreshToken}`,
+            3600 * 72,
+            refreshToken
+          );
+
+          return helpersWrapper.response(res, 200, "Success refresh token", {
+            id: result.id,
+            token,
+            refreshToken: newRefreshToken,
+          });
+        });
       });
     } catch (error) {
       return helpersWrapper.response(res, 400, `SQL : ${error.message}`, null);

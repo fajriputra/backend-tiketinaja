@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,500;0,600;0,700;0,800;1,400;1,700;1,800&display=swap"
+    rel="stylesheet"
+  />
+
+  <head>
+    <style>
+      .cardWrap {
+        width: 27em;
+        margin: 3em auto;
+        color: #fff;
+        font-family: sans-serif;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+      }
+
+      .card {
+        background: linear-gradient(
+          to bottom,
+          #e84c3d 0%,
+          #e84c3d 26%,
+          #ecedef 26%,
+          #ecedef 100%
+        );
+        height: 15em;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        position: relative;
+        padding: 1em;
+        margin-top: 100px;
+      }
+
+      .cardLeft {
+        border-top-left-radius: 8px;
+        border-bottom-left-radius: 8px;
+        width: 16em;
+      }
+
+      .cardRight {
+        width: 6.5em;
+        border-left: 0.18em dashed #fff;
+        border-top-right-radius: 8px;
+        border-bottom-right-radius: 8px;
+      }
+
+      .cardRight:before,
+      .cardRight:after {
+        content: "";
+        position: absolute;
+        display: block;
+        width: 0.9em;
+        height: 0.9em;
+        background: #fff;
+        border-radius: 50%;
+        left: -0.55em;
+      }
+
+      .cardRight:before {
+        top: -0.45em;
+      }
+
+      .cardRight:after {
+        bottom: -0.45em;
+      }
+
+      h1 {
+        font-size: 1.1em;
+        margin-top: 0;
+      }
+
+      h1 span {
+        font-weight: normal;
+      }
+
+      .title,
+      .name,
+      .date,
+      .seat,
+      .ticket,
+      .time,
+      .price {
+        text-transform: uppercase;
+        font-weight: normal;
+      }
+
+      .title h2,
+      .name h2,
+      .date h2,
+      .ticket h2,
+      .seat h2,
+      .time h2,
+      .price h2 {
+        font-size: 0.9em;
+        color: #525252;
+        margin: 0;
+      }
+
+      .title span,
+      .name span,
+      .date span,
+      .ticket span,
+      .seat span,
+      .time span,
+      .price span {
+        font-size: 0.7em;
+        color: #a2aeae;
+      }
+
+      .title {
+        margin: 2em 0 0 0;
+      }
+
+      .name,
+      .date,
+      .ticket,
+      .seat,
+      .price {
+        margin: 0.7em 0 0 0;
+      }
+
+      .time,
+      .ticket,
+      .price {
+        margin: 0.7em 0 0 1em;
+      }
+
+      .flex {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+      }
+
+      .eye {
+        position: relative;
+        width: 2em;
+        height: 1.5em;
+        background: #fff;
+        margin: 0 auto;
+        border-radius: 1em/0.6em;
+        z-index: 1;
+      }
+
+      .eye:before,
+      .eye:after {
+        content: "";
+        display: block;
+        position: absolute;
+        border-radius: 50%;
+      }
+
+      .eye:before {
+        width: 1em;
+        height: 1em;
+        background: #e84c3d;
+        z-index: 2;
+        left: 8px;
+        top: 4px;
+      }
+
+      .eye:after {
+        width: 0.5em;
+        height: 0.5em;
+        background: #fff;
+        z-index: 3;
+        left: 12px;
+        top: 8px;
+      }
+
+      .barcode {
+        height: 2em;
+        width: 0;
+        margin: 6.5em 0.8em;
+        box-shadow: 1px 0 0 1px #343434, 5px 0 0 1px #343434,
+          10px 0 0 1px #343434, 11px 0 0 1px #343434, 15px 0 0 1px #343434,
+          18px 0 0 1px #343434, 22px 0 0 1px #343434, 23px 0 0 1px #343434,
+          26px 0 0 1px #343434, 30px 0 0 1px #343434, 35px 0 0 1px #343434,
+          37px 0 0 1px #343434, 41px 0 0 1px #343434, 44px 0 0 1px #343434,
+          47px 0 0 1px #343434, 51px 0 0 1px #343434, 56px 0 0 1px #343434,
+          59px 0 0 1px #343434, 64px 0 0 1px #343434, 68px 0 0 1px #343434,
+          72px 0 0 1px #343434, 74px 0 0 1px #343434, 77px 0 0 1px #343434,
+          81px 0 0 1px #343434;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="cardWrap">
+      <div class="card cardLeft">
+        <h1>Ticketing <span>App</span></h1>
+        <div class="title">
+          <span>movie</span>
+          <h2><%= newTampungData.name %></h2>
+        </div>
+
+        <div class="name">
+          <span>name</span>
+          <h2><%= newTampungData.user %></h2>
+        </div>
+
+        <div class="flex">
+          <div class="date">
+            <span>date</span>
+            <h2><%= newTampungData.dateBooking %></h2>
+          </div>
+          <div class="time">
+            <span>time</span>
+            <h2><%= newTampungData.timeBooking %></h2>
+          </div>
+          <div class="ticket">
+            <span>ticket</span>
+            <h2><%= newTampungData.totalTicket %></h2>
+          </div>
+        </div>
+
+        <div class="flex">
+          <div class="seat">
+            <span>seats</span>
+            <h2><%= newTampungData.seat %></h2>
+          </div>
+          <div class="price">
+            <span>price</span>
+            <h2><%= newTampungData.totalPayment %></h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="card cardRight">
+        <div class="eye"></div>
+        <div class="barcode">
+          <a href="<%= newTampungData.link %>"></a>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

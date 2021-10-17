@@ -1,32 +1,39 @@
+const { v4: uuidv4 } = require("uuid");
+const moment = require("moment");
+const ejs = require("ejs");
+const pdf = require("html-pdf");
+const path = require("path");
 const bookingModel = require("./bookingModel");
+const scheduleModel = require("../schedule/scheduleModel");
 const helpersWrapper = require("../../helpers/wrapper");
+const midtrans = require("../../helpers/midtrans");
 
 module.exports = {
   storeBooking: async (req, res) => {
     try {
       const {
-        userId,
         dateBooking,
         timeBooking,
-        movieId,
         scheduleId,
         seat: totalTicket,
         paymentMethod,
-        statusPayment,
       } = req.body;
 
-      const findPrice = await bookingModel.getPrice(scheduleId);
+      const { id } = req.decodeToken;
+
+      const schedule = await scheduleModel.getSingleSchedule(scheduleId);
 
       const data = {
-        userId,
+        id: uuidv4(),
+        userId: id,
         dateBooking,
         timeBooking,
-        movieId,
+        movieId: schedule[0].movieId,
         scheduleId,
         totalTicket,
-        totalPayment: findPrice * totalTicket.length,
+        totalPayment: schedule[0].price * totalTicket.length,
         paymentMethod,
-        statusPayment,
+        statusPayment: "pending",
       };
 
       const dataa = { ...data, totalTicket: totalTicket.length };
@@ -37,7 +44,7 @@ module.exports = {
         const setData = {
           bookingId: result.id,
           scheduleId,
-          movieId,
+          movieId: schedule[0].movieId,
           dateSchedule: dateBooking,
           timeSchedule: timeBooking,
           seat: ele,
@@ -45,12 +52,81 @@ module.exports = {
         await bookingModel.storeBookingSeat(setData);
       });
 
+      const resultMidtrans = await midtrans.postMidtrans(
+        result.id,
+        result.totalPayment
+      );
+
+      await bookingModel.updateBooking(
+        { urlRedirect: resultMidtrans },
+        result.id
+      );
+
+      return helpersWrapper.response(res, 200, "Success create booking", {
+        ...result,
+        urlRedirect: resultMidtrans,
+      });
+    } catch (error) {
       return helpersWrapper.response(
         res,
-        200,
-        "Success create booking",
-        result
+        400,
+        `Bad request : ${error.message}`,
+        null
       );
+    }
+  },
+  midtransNotif: async (req, res) => {
+    try {
+      const result = await midtrans.notif(req.body);
+      const {
+        order_id: bookingId,
+        transaction_status: transactionStatus,
+        fraud_status: fraudStatus,
+      } = result;
+
+      if (transactionStatus === "capture") {
+        // capture only applies to card transaction, which you need to check for the fraudStatus
+        if (fraudStatus === "challenge") {
+          // TODO set transaction status on your databaase to 'challenge'
+        } else if (fraudStatus === "accept") {
+          // TODO set transaction status on your databaase to 'success'
+          // [1]
+          const setData = {
+            statusPayment: "success",
+            statusTicket: "Active",
+            updatedAt: new Date(Date.now()),
+          };
+          await bookingModel.updateBooking(setData, bookingId);
+        }
+      } else if (transactionStatus === "settlement") {
+        // TODO set transaction status on your databaase to 'success'
+        // [1]
+        const setData = {
+          statusPayment: "success",
+          statusTicket: "Active",
+          updatedAt: new Date(Date.now()),
+        };
+
+        await bookingModel.updateBooking(setData, bookingId);
+      } else if (transactionStatus === "deny") {
+        // TODO you can ignore 'deny', because most of the time it allows payment retries
+        // and later can become success
+      } else if (
+        transactionStatus === "cancel" ||
+        transactionStatus === "expire"
+      ) {
+        // TODO set transaction status on your databaase to 'failure'
+        // [1]
+        const setData = {
+          statusPayment: "failed",
+          statusTicket: "notActive",
+          updatedAt: new Date(Date.now()),
+        };
+
+        await bookingModel.updateBooking(setData, bookingId);
+      } else if (transactionStatus === "pending") {
+        // TODO set transaction status on your databaase to 'pending' / waiting payment
+      }
     } catch (error) {
       return helpersWrapper.response(
         res,
@@ -177,6 +253,67 @@ module.exports = {
       const result = await bookingModel.getStatusTicket("notActive", id);
 
       return helpersWrapper.response(res, 200, "Success use ticket", result);
+    } catch (error) {
+      return helpersWrapper.response(
+        res,
+        400,
+        `Bad request : ${error.message}`,
+        null
+      );
+    }
+  },
+  exportTicket: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { firstName, lastName } = req.decodeToken;
+
+      const fileName = `ticket-${id}.pdf`;
+      const booking = await bookingModel.exportTicket(id);
+
+      const bookingSeat = booking.map((item) => item.seat);
+
+      const tampung = [];
+      booking.map((item) => {
+        const newData = {
+          ...item,
+          user: `${firstName} ${lastName}`,
+          dateBooking: moment(item.dateBooking).format("DD MMM"),
+          timeBooking: moment(item.timeBooking, ["HH:mm"]).format("LT"),
+          seat: bookingSeat,
+          link: `http:${req.get("host")}/status-ticket/${item.bookingId}`,
+        };
+        tampung.push(newData);
+      });
+
+      const newTampungData = tampung[0];
+
+      ejs.renderFile(
+        path.resolve("./src/templates/pdf/index.ejs"),
+        { newTampungData },
+        (error, result) => {
+          if (!error) {
+            const options = {
+              height: "11.25in",
+              width: "8.5in",
+            };
+            pdf
+              .create(result, options)
+              .toFile(path.resolve(`./public/generate/${fileName}`), (err) => {
+                if (err) {
+                  return helpersWrapper.response(res, 400, error.message, null);
+                }
+                return helpersWrapper.response(
+                  res,
+                  200,
+                  "Success export ticket",
+                  {
+                    url: `http://${req.get("host")}/generate/${fileName}`,
+                  }
+                );
+              });
+          }
+        }
+      );
     } catch (error) {
       return helpersWrapper.response(
         res,
