@@ -104,4 +104,4 @@ To build a project that I created requires several dependencies / packages, such
 
 AL FAJRI PUTRA PRATAMA - [@fjri.p](https://instagram.com/fjri.p)
 
-PROJECT LINK [here](https://github.com/fajriputra/backend-tiketinaja)
+PROJECT LINK [here](https://backend-tiketinaja.herokuapp.com)
