@@ -41,7 +41,7 @@ module.exports = {
       // - get by date
       let { page, limit, movieId, location, sortType } = req.query;
       page = Number(page) || 1;
-      limit = Number(limit) || 3;
+      limit = Number(limit) || 6;
       movieId = movieId || "";
       location = location || "";
       sortType = sortType || "asc";

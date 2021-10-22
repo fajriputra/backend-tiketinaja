@@ -44,7 +44,7 @@ module.exports = {
       // eslint-disable-next-line prefer-const
       let { page, limit, keyword, sortBy, sortType } = req.query;
       page = Number(page) || 1;
-      limit = Number(limit) || 3;
+      limit = Number(limit) || 6;
       keyword = keyword || "";
       sortBy = sortBy || "name";
       sortType = sortType || "asc";
