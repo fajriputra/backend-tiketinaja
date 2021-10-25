@@ -34,19 +34,7 @@ module.exports = {
         }
       );
     }),
-  // getPrice: (scheduleId) =>
-  //   new Promise((resolve, reject) => {
-  //     connection.query(
-  //       `SELECT price FROM schedule WHERE id = ${scheduleId}`,
-  //       (error, result) => {
-  //         if (!error) {
-  //           resolve(result[0].price);
-  //         } else {
-  //           reject(new Error(`SQL : ${error.sqlMessage}`));
-  //         }
-  //       }
-  //     );
-  //   }),
+
   getAllSeatBooking: (scheduleId, movieId, dateSchedule, timeSchedule) =>
     new Promise((resolve, reject) => {
       connection.query(
@@ -106,11 +94,6 @@ module.exports = {
         "UPDATE booking SET statusTicket = ? WHERE id = ?",
         [data, id],
         (error, result) => {
-          // const newResult = {
-          //   id,
-          //   data,
-          // };
-
           if (!error) {
             resolve(result);
           } else {
