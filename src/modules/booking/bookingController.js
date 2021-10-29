@@ -14,9 +14,9 @@ module.exports = {
       const {
         dateBooking,
         timeBooking,
+        movieId,
         scheduleId,
         seat: totalTicket,
-        paymentMethod,
       } = req.body;
 
       const { id } = req.decodeToken;
@@ -27,12 +27,11 @@ module.exports = {
         id: uuidv4(),
         userId: id,
         dateBooking,
+        movieId,
         timeBooking,
-        movieId: schedule[0].movieId,
         scheduleId,
         totalTicket,
         totalPayment: schedule[0].price * totalTicket.length,
-        paymentMethod,
         statusPayment: "pending",
       };
 
@@ -44,7 +43,7 @@ module.exports = {
         const setData = {
           bookingId: result.id,
           scheduleId,
-          movieId: schedule[0].movieId,
+          movieId,
           dateSchedule: dateBooking,
           timeSchedule: timeBooking,
           seat: ele,
@@ -148,12 +147,7 @@ module.exports = {
       );
 
       if (!result.length) {
-        return helpersWrapper.response(
-          res,
-          404,
-          "Data yang kamu cari tidak ditemukan",
-          null
-        );
+        return helpersWrapper.response(res, 200, null);
       }
 
       return helpersWrapper.response(res, 200, "Success getting data", result);
