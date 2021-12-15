@@ -7,7 +7,7 @@ router.post("/", middlewareAuth.authentication, bookingController.storeBooking);
 router.post("/midtrans-notification", bookingController.midtransNotif);
 router.get("/seat", bookingController.getAllSeatBooking);
 router.get("/:id", bookingController.getBookingById);
-router.get("/user-id/:userId", bookingController.getBookingByUserId);
+router.get("/user-id/:id", bookingController.getBookingByUserId);
 router.get(
   "/status-ticket/:id",
   middlewareAuth.authentication,

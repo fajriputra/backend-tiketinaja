@@ -12,8 +12,7 @@ const sendMail = require("../../helpers/email");
 module.exports = {
   register: async (req, res) => {
     try {
-      const { firstName, lastName, email, password, phoneNumber, avatar } =
-        req.body;
+      const { firstName, lastName, email, password, phoneNumber } = req.body;
 
       if (!firstName || !lastName || !email || !password || !phoneNumber) {
         return helpersWrapper.response(res, 400, "Field must be filled", null);
@@ -58,7 +57,7 @@ module.exports = {
         email,
         password: hashPassword,
         phoneNumber,
-        avatar,
+        // avatar,
       };
 
       const activation = createActivationToken(setData);
@@ -70,7 +69,7 @@ module.exports = {
         data: {
           firstname: `${firstName} ${lastName}`,
           email,
-          url: `http://localhost:3001/auth/activation/${activation}`,
+          url: `${process.env.CLIENT_URL}/auth/activation/${activation}`,
         },
       };
 
@@ -87,17 +86,18 @@ module.exports = {
   },
   activateEmail: async (req, res) => {
     try {
-      const { activateToken } = req.body;
+      // eslint-disable-next-line camelcase
+      const { activation_token } = req.body;
 
       jwt.verify(
-        activateToken,
+        activation_token,
         process.env.ACTIVATION_TOKEN_SECRET,
         async (error, result) => {
           if (error) {
             return helpersWrapper.response(
               res,
               403,
-              "Token has expired, please re-register",
+              "Your token has been expired, please re-register",
               null
             );
           }

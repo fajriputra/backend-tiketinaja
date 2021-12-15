@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 18, 2021 at 12:18 PM
+-- Generation Time: Dec 15, 2021 at 11:28 AM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.9
 
@@ -44,6 +44,19 @@ CREATE TABLE `booking` (
   `updatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `booking`
+--
+
+INSERT INTO `booking` (`id`, `userId`, `dateBooking`, `timeBooking`, `movieId`, `scheduleId`, `totalTicket`, `totalPayment`, `paymentMethod`, `statusPayment`, `urlRedirect`, `statusTicket`, `createdAt`, `updatedAt`) VALUES
+('29f5a524-886b-422e-b854-f68200d9aec0', '270034aa-20fa-40f8-99de-6d4e6c9502ab', '2021-12-14', '12:30:00', 42, 58, 3, 104997, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/e2ef2d26-509f-4bf4-8d04-f37345a7a5f5', 'inProcess', '2021-12-14 05:01:22', NULL),
+('3aa0f2d7-7571-4e96-aeec-96b9318b3160', '270034aa-20fa-40f8-99de-6d4e6c9502ab', '2021-12-17', '10:30:00', 43, 50, 3, 105000, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/e13fe9f6-2f8f-4831-a340-4496ec753060', 'Active', '2021-12-14 05:03:19', NULL),
+('6c07aecd-a5c4-4ea2-97c2-7015d9da6fef', '47b95f70-0c95-4a6d-8ce2-6ed532a79edd', '2021-12-15', '12:30:00', 42, 50, 3, 105000, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/23a8b50f-e873-4231-a3a0-6d9da63322a0', 'notActive', '2021-12-15 08:56:54', NULL),
+('7444e93c-3285-47ae-9680-bdf630008a6e', '47b95f70-0c95-4a6d-8ce2-6ed532a79edd', '2021-12-15', '16:30:00', 35, 56, 3, 105000, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/b44b6e98-a14f-4ea8-9cb5-2a6ea0316a7a', 'Active', '2021-12-15 09:20:06', NULL),
+('9e74eb13-9986-40e2-8b8f-4a26096bea2f', '270034aa-20fa-40f8-99de-6d4e6c9502ab', '2021-12-14', '14:30:00', 42, 58, 3, 104997, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/06d45483-cb5e-49a8-9787-edb5d9aba080', 'inProcess', '2021-12-14 05:04:16', NULL),
+('a4a1d900-c100-4ae4-bfc3-64fc019c4faa', '270034aa-20fa-40f8-99de-6d4e6c9502ab', '2021-12-15', '16:30:00', 32, 52, 3, 135000, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/e6438e7a-c07b-4a6a-8424-de131097b262', 'inProcess', '2021-12-14 05:09:04', NULL),
+('f8f6945d-2718-4430-a67d-62c459f42797', '47b95f70-0c95-4a6d-8ce2-6ed532a79edd', '2021-12-15', '10:30:00', 36, 58, 3, 104997, '', 'pending', 'https://app.sandbox.midtrans.com/snap/v2/vtweb/7ca67521-852d-46c3-8104-9af747156e80', 'inProcess', '2021-12-15 08:52:45', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -61,6 +74,33 @@ CREATE TABLE `bookingseat` (
   `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
   `updatedAt` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `bookingseat`
+--
+
+INSERT INTO `bookingseat` (`id`, `bookingId`, `scheduleId`, `movieId`, `dateSchedule`, `timeSchedule`, `seat`, `createdAt`, `updatedAt`) VALUES
+(191, '29f5a524-886b-422e-b854-f68200d9aec0', 58, 42, '2021-12-14', '12:30:00', 'A1', '2021-12-14 05:01:22', NULL),
+(192, '29f5a524-886b-422e-b854-f68200d9aec0', 58, 42, '2021-12-14', '12:30:00', 'A2', '2021-12-14 05:01:22', NULL),
+(193, '29f5a524-886b-422e-b854-f68200d9aec0', 58, 42, '2021-12-14', '12:30:00', 'A3', '2021-12-14 05:01:22', NULL),
+(194, '3aa0f2d7-7571-4e96-aeec-96b9318b3160', 50, 43, '2021-12-17', '10:30:00', 'A1', '2021-12-14 05:03:19', NULL),
+(195, '3aa0f2d7-7571-4e96-aeec-96b9318b3160', 50, 43, '2021-12-17', '10:30:00', 'A2', '2021-12-14 05:03:19', NULL),
+(196, '3aa0f2d7-7571-4e96-aeec-96b9318b3160', 50, 43, '2021-12-17', '10:30:00', 'A3', '2021-12-14 05:03:19', NULL),
+(197, '9e74eb13-9986-40e2-8b8f-4a26096bea2f', 58, 42, '2021-12-14', '14:30:00', 'A1', '2021-12-14 05:04:16', NULL),
+(198, '9e74eb13-9986-40e2-8b8f-4a26096bea2f', 58, 42, '2021-12-14', '14:30:00', 'A2', '2021-12-14 05:04:16', NULL),
+(199, '9e74eb13-9986-40e2-8b8f-4a26096bea2f', 58, 42, '2021-12-14', '14:30:00', 'A3', '2021-12-14 05:04:16', NULL),
+(200, 'a4a1d900-c100-4ae4-bfc3-64fc019c4faa', 52, 32, '2021-12-15', '16:30:00', 'A1', '2021-12-14 05:09:04', NULL),
+(201, 'a4a1d900-c100-4ae4-bfc3-64fc019c4faa', 52, 32, '2021-12-15', '16:30:00', 'A2', '2021-12-14 05:09:04', NULL),
+(202, 'a4a1d900-c100-4ae4-bfc3-64fc019c4faa', 52, 32, '2021-12-15', '16:30:00', 'A3', '2021-12-14 05:09:04', NULL),
+(203, 'f8f6945d-2718-4430-a67d-62c459f42797', 58, 36, '2021-12-15', '10:30:00', 'A1', '2021-12-15 08:52:45', NULL),
+(204, 'f8f6945d-2718-4430-a67d-62c459f42797', 58, 36, '2021-12-15', '10:30:00', 'A2', '2021-12-15 08:52:45', NULL),
+(205, 'f8f6945d-2718-4430-a67d-62c459f42797', 58, 36, '2021-12-15', '10:30:00', 'A3', '2021-12-15 08:52:45', NULL),
+(206, '6c07aecd-a5c4-4ea2-97c2-7015d9da6fef', 50, 42, '2021-12-15', '12:30:00', 'B1', '2021-12-15 08:56:54', NULL),
+(207, '6c07aecd-a5c4-4ea2-97c2-7015d9da6fef', 50, 42, '2021-12-15', '12:30:00', 'B2', '2021-12-15 08:56:54', NULL),
+(208, '6c07aecd-a5c4-4ea2-97c2-7015d9da6fef', 50, 42, '2021-12-15', '12:30:00', 'B3', '2021-12-15 08:56:54', NULL),
+(209, '7444e93c-3285-47ae-9680-bdf630008a6e', 56, 35, '2021-12-15', '16:30:00', 'B1', '2021-12-15 09:20:06', NULL),
+(210, '7444e93c-3285-47ae-9680-bdf630008a6e', 56, 35, '2021-12-15', '16:30:00', 'C1', '2021-12-15 09:20:06', NULL),
+(211, '7444e93c-3285-47ae-9680-bdf630008a6e', 56, 35, '2021-12-15', '16:30:00', 'C2', '2021-12-15 09:20:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -92,7 +132,6 @@ INSERT INTO `movie` (`id`, `name`, `category`, `image`, `releaseDate`, `cast`, `
 (35, 'Free Guy', 'Action,Adventure,Comedy,Science Fiction ', '2021-09-29T12-10-42.393Zfree guy.jpg', '2021-08-13', 'Ryan Reynolds,Jodie Comer,Lil Rel Howery,Joe Keery,Taika Waititi,Utkarsh Ambudkar', 'Shawn Levy', '1 hours 55 minutes', 'A bank teller called Guy realizes he is a background character in an open world video game called Free City that will soon go offline.', '2021-09-29 12:10:42', NULL),
 (36, 'Foundation', 'Sci-Fi,Fantasy,Drama ', '2021-09-29T12-16-45.995Zfoundation.jpg', '2021-09-23', 'Jared Harris,Lou Llobell,Lee Pace,Leah Harvey,Laura Birn,Terrence Mann', 'David S. Goyer', '1 hours 9 minutes', 'Follow a band of exiles on their monumental journey to save humanity and rebuild civilization amid the fall of the Galactic Empire.', '2021-09-29 12:16:46', NULL),
 (37, 'Midnight Mass', 'Drama,Mystery ', '2021-09-29T12-20-42.670Zmidnight mass.jpg', '2021-09-24', 'Alex Essoe,Zach Gilford,Hamish Linklater,Kate Siegel,Annabeth Gish,Michael Trucco', 'Mike Flanagan', '1 hours 4 minutes', 'An isolated island community experiences miraculous events - and frightening omens - after the arrival of a charismatic, mysterious young priest.', '2021-09-29 12:20:42', NULL),
-(38, 'The Starling', 'Drama,Comedy', '2021-09-29T12-24-16.631Zthe starling.jpg', '2021-09-17', 'Melissa McCarthy,Chris O\'Dowd,Kevin Kline,Timothy Olyphant,Daveed Diggs,Skyler Gisondo', 'Theodore Melfi', '1 hours 43 minutes', 'A woman adjusting to life after a loss contends with a feisty bird that\'s taken over her garden — and a husband who\'s struggling to find a way forward.', '2021-09-29 12:24:16', NULL),
 (39, 'Venom: Let There Be Carnage', 'Science Fiction,Action,Comedy', '2021-09-29T12-29-08.266Zvenom.jpg', '2021-09-30', 'Tom Hardy,Michelle Williams,Woody Harrelson,Reid Scott,Naomie Harris,Stephen Graham', 'Andy Serkis', '1 hours 37 minutes', 'Sequel to the box-office hit film Venom.', '2021-09-29 12:29:08', NULL),
 (40, 'Old', 'Mystery,Thriller,Horror', '2021-09-29T12-34-11.817ZOld.jpg', '2021-07-21', 'Gael García Bernal,Vicky Krieps,Rufus Sewell,Alex Wolff,Thomasin McKenzie,Abbey Lee', 'M. Night Shyamalan', '1 hours 48 minutes', 'A group of families on a tropical holiday discover that the secluded beach where they are staying is somehow causing them to age rapidly – reducing their entire lives into a single day.', '2021-09-29 12:34:11', NULL),
 (41, 'Fast & Forious 9', 'Action,Crime,Thriller', '2021-09-29T12-38-58.768ZF9.jpg', '2021-05-19', 'Vin Diesel,Michelle Rodriguez,Tyrese Gibson,Ludacris,John Cena,Nathalie Emmanuel', 'Justin Lin', '2 hours 23 minutes', 'Dominic Toretto and his crew battle the most skilled assassin and high-performance driver they\'ve ever encountered: his forsaken brother.', '2021-09-29 12:38:58', '2021-09-30 16:02:55'),
@@ -124,18 +163,16 @@ CREATE TABLE `schedule` (
 --
 
 INSERT INTO `schedule` (`id`, `movieId`, `premier`, `price`, `location`, `dateStart`, `dateEnd`, `time`, `createdAt`, `updatedAt`) VALUES
-(28, 32, 'Dune', 30000, 'Tangerang Selatan', '2021-10-01 08:30:00', '2021-10-01 11:05:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 15:49:13', NULL),
-(29, 34, 'Squid Game', 35000, 'Tangerang', '2021-10-02 10:30:00', '2021-10-02 11:34:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 15:51:18', NULL),
-(30, 35, 'Free Guy', 40000, 'Jakarta Selatan', '2021-10-03 12:00:00', '2021-10-03 13:55:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 15:54:03', '2021-09-29 15:56:19'),
-(31, 36, 'Foundation', 40000, 'Jakarta Barat', '2021-10-04 14:00:00', '2021-10-04 15:09:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 15:58:23', NULL),
-(32, 37, 'Midnight Mass', 45000, 'Jakarta Timur', '2021-10-05 16:30:00', '2021-10-05 17:34:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:00:43', NULL),
-(33, 38, 'The Starling', 50000, 'Jakarta Utara', '2021-10-06 19:00:00', '2021-10-06 20:43:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:03:10', NULL),
-(34, 39, 'Venom: Let There Be Carnage', 55000, 'Bekasi', '2021-10-07 20:30:00', '2021-10-07 22:07:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:04:50', NULL),
-(35, 40, 'Old', 60000, 'Jakarta Pusat', '2021-10-08 14:00:00', '2021-10-08 15:48:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:08:30', NULL),
-(36, 41, 'Fast & Forious 9', 50000, 'Bandung', '2021-10-09 12:00:00', '2021-10-09 14:23:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:11:42', NULL),
-(37, 42, 'Birds of Paradise', 40000, 'Bogor', '2021-10-10 14:00:00', '2021-10-10 15:53:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:14:07', NULL),
-(38, 43, 'Black Widow', 40000, 'Jakarta Selatan', '2021-10-11 19:00:00', '2021-10-11 21:14:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:16:23', NULL),
-(39, 48, 'The Tomorrow War', 50000, 'Jakarta Utara', '2021-10-12 10:30:00', '2021-10-12 12:38:00', '08:30,10:30,12:00,14:00,16:30,19:00,20:30', '2021-09-29 16:17:47', NULL);
+(50, 35, 'CineOne21', 35000, 'Aceh', '2021-12-08 00:00:00', '2021-12-12 00:00:00', '08:30,10:30,12:30', '2021-12-12 04:58:04', '2021-12-14 07:24:36'),
+(51, 43, 'hiflix Cinema', 40000, 'Sumatera Barat', '2021-12-13 00:00:00', '2021-12-15 00:00:00', '08:30,10:30', '2021-12-12 04:59:04', '2021-12-13 09:15:58'),
+(52, 32, 'ebv.id', 45000, 'Dki Jakarta', '2021-12-16 00:00:00', '2021-12-20 00:00:00', '16:30', '2021-12-12 04:59:44', NULL),
+(53, 36, 'hiflix Cinema', 35000, 'Sulawesi Tenggara', '2021-12-11 00:00:00', '2021-12-13 00:00:00', '10:30,12:30', '2021-12-12 05:00:35', '2021-12-13 09:12:55'),
+(54, 35, 'hiflix Cinema', 50000, 'Kepulauan Riau', '2021-12-13 00:00:00', '2021-12-15 00:00:00', '08:30', '2021-12-12 05:02:53', NULL),
+(55, 37, 'ebv.id', 45000, 'Kepulauan Bangka Belitung', '2021-12-14 00:00:00', '2021-12-18 00:00:00', '10:30', '2021-12-12 05:03:31', NULL),
+(56, 40, 'hiflix Cinema', 35000, 'Di Yogyakarta', '2021-12-13 00:00:00', '2021-12-14 00:00:00', '12:30,16:30', '2021-12-12 05:04:17', '2021-12-13 08:26:24'),
+(57, 39, 'ebv.id', 45000, 'Bali', '2021-12-14 00:00:00', '2021-12-15 00:00:00', '16:30', '2021-12-13 07:56:49', NULL),
+(58, 48, 'hiflix Cinema', 34999, 'Bengkulu', '2021-12-10 00:00:00', '2021-12-14 00:00:00', '08:30,10:30,12:30', '2021-12-13 07:59:08', '2021-12-14 07:14:21'),
+(59, 42, 'ebv.id', 50000, 'Banten', '2021-12-14 00:00:00', '2021-12-16 00:00:00', '10:30,12:30', '2021-12-13 09:15:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -162,7 +199,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `firstName`, `lastName`, `email`, `password`, `phoneNumber`, `avatar`, `role`, `statusUser`, `createdAt`, `updatedAt`) VALUES
-('f392013c-736a-432b-8514-187c5687676d', 'fajri', 'admin', 'tugasmikrotik@gmail.com', '$2b$12$tCrI8fc3TWc9Jp8EoerukewVdlyU9p3Ti9LanrvnuUB2b2xZCcFme', '123456789', NULL, 'admin', 'Active', '2021-10-08 13:21:22', NULL);
+('270034aa-20fa-40f8-99de-6d4e6c9502ab', 'fajri putra', 'admin', 'tugasmikrotik@gmail.com', '$2b$12$7Uw8DafiBlV6voeL6/sclug9wTDJMqIUODLNfi1d9/nTIJL8w68WO', '123456789', '2021-12-10T10-07-36.976Zpotoku.jpg', 'admin', 'Active', '2021-10-25 05:02:11', '2021-12-10 10:07:36'),
+('47b95f70-0c95-4a6d-8ce2-6ed532a79edd', 'fajri user', 'ganteng', 'fajriwn27@gmail.com', '$2b$12$9et80vKwRvmd2XD9L7Ux8OMOGNRjzYSJaipF87aYNzMttTkeZ1uP.', '3334442234', '2021-12-10T10-09-58.418Zpotoku.jpg', 'user', 'Active', '2021-11-04 05:37:15', '2021-12-14 09:05:23');
 
 --
 -- Indexes for dumped tables
@@ -206,19 +244,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `bookingseat`
 --
 ALTER TABLE `bookingseat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=212;
 
 --
 -- AUTO_INCREMENT for table `movie`
 --
 ALTER TABLE `movie`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=147;
 
 --
 -- AUTO_INCREMENT for table `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

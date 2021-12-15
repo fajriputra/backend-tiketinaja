@@ -16,6 +16,23 @@ module.exports = {
         synopsis,
       } = req.body;
 
+      if (
+        !name ||
+        !category ||
+        !releaseDate ||
+        !cast ||
+        !director ||
+        !duration ||
+        !synopsis
+      ) {
+        return helpersWrapper.response(
+          res,
+          400,
+          "All fields must be filled",
+          []
+        );
+      }
+
       const data = {
         name,
         category,
@@ -42,12 +59,13 @@ module.exports = {
   getMovies: async (req, res) => {
     try {
       // eslint-disable-next-line prefer-const
-      let { page, limit, keyword, sortBy, sortType } = req.query;
+      let { page, limit, keyword, sortBy, sortType, month } = req.query;
       page = Number(page) || 1;
-      limit = Number(limit) || 6;
+      limit = Number(limit) || 8;
       keyword = keyword || "";
       sortBy = sortBy || "name";
       sortType = sortType || "asc";
+      month = month || "";
 
       let offset = page * limit - limit;
       const totalData = await movieModel.getCountMovie(keyword);
@@ -69,6 +87,7 @@ module.exports = {
         limit,
         offset,
         keyword,
+        month,
         sortBy,
         sortType
       );
@@ -76,10 +95,9 @@ module.exports = {
       if (!result.length) {
         return helpersWrapper.response(
           res,
-          404,
+          200,
           `Data ${keyword} tidak ditemukan`,
-          result,
-          pageInfo
+          []
         );
       }
 
@@ -227,9 +245,7 @@ module.exports = {
         );
       }
 
-      if (req.file && checkId[0].image) {
-        deleteFile(`public/uploads/movie/${checkId[0].image}`);
-      }
+      deleteFile(`public/uploads/movie/${checkId[0].image}`);
 
       const result = await movieModel.deleteMovie(id);
 

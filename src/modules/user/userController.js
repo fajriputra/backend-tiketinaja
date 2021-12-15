@@ -13,6 +13,15 @@ module.exports = {
 
       const { newPassword, confirmPassword } = req.body;
 
+      if (!newPassword || !confirmPassword) {
+        return helpersWrapper.response(
+          res,
+          400,
+          "All fields must be filled",
+          null
+        );
+      }
+
       if (newPassword.length < 6) {
         return helpersWrapper.response(
           res,
@@ -52,6 +61,15 @@ module.exports = {
       const { id } = req.decodeToken;
 
       const { firstName, lastName, email, phoneNumber } = req.body;
+
+      if (!firstName || !lastName || !phoneNumber) {
+        return helpersWrapper.response(
+          res,
+          400,
+          "All fields must be filled",
+          null
+        );
+      }
 
       if (email) {
         const checkEmail = await authModel.getUserByEmail(email);

@@ -3,8 +3,8 @@ const connection = require("../../config/database");
 module.exports = {
   getDataDashboard: (movieId, location, premier) =>
     new Promise((resolve, reject) => {
-      connection.query(
-        `SELECT MONTHNAME(b.createdAt) AS month, SUM(b.totalPayment) AS total FROM booking AS b JOIN schedule AS s WHERE YEAR(s.createdAt) = YEAR(NOW()) AND s.movieId = "${movieId}" AND s.location = "${location}" AND s.premier = "${premier}" GROUP BY MONTHNAME(b.createdAt) DESC`,
+      const query = connection.query(
+        `SELECT MONTHNAME(b.createdAt) AS month, SUM(b.totalPayment) AS total FROM booking AS b JOIN schedule AS s ON b.scheduleId = s.id WHERE YEAR(s.createdAt) = YEAR(NOW()) AND b.movieId = "${movieId}" AND s.location = "${location}" AND s.premier = "${premier}" GROUP BY MONTHNAME(b.createdAt)`,
         (error, result) => {
           const newResult = result.map((item) => {
             const sliceMonth = {
@@ -21,5 +21,6 @@ module.exports = {
           }
         }
       );
+      console.log(query.sql);
     }),
 };

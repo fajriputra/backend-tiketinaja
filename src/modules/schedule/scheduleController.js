@@ -8,6 +8,23 @@ module.exports = {
       const { movieId, premier, price, location, dateStart, dateEnd, time } =
         req.body;
 
+      if (
+        !movieId ||
+        !premier ||
+        !price ||
+        !location ||
+        !dateStart ||
+        !dateEnd ||
+        !time
+      ) {
+        return helpersWrapper.response(
+          res,
+          400,
+          "All fields must be filled",
+          null
+        );
+      }
+
       const data = {
         movieId,
         premier,
@@ -69,9 +86,10 @@ module.exports = {
       if (!result.length) {
         return helpersWrapper.response(
           res,
-          404,
+          200,
           "Data yang kamu cari tidak ditemukan",
-          null
+          [],
+          pageInfo
         );
       }
 

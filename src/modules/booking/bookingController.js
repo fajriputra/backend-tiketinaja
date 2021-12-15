@@ -147,7 +147,12 @@ module.exports = {
       );
 
       if (!result.length) {
-        return helpersWrapper.response(res, 200, null);
+        return helpersWrapper.response(
+          res,
+          200,
+          "Data yang kamu cari tidak ditemukan",
+          []
+        );
       }
 
       return helpersWrapper.response(res, 200, "Success getting data", result);
@@ -169,9 +174,9 @@ module.exports = {
       if (!result.length) {
         return helpersWrapper.response(
           res,
-          404,
+          200,
           `Data by id : ${id} tidak ditemukan`,
-          null
+          []
         );
       }
 
@@ -191,16 +196,16 @@ module.exports = {
   },
   getBookingByUserId: async (req, res) => {
     try {
-      const { userId } = req.params;
+      const { id } = req.params;
 
-      const result = await bookingModel.getBookingByUserId(userId);
+      const result = await bookingModel.getBookingByUserId(id);
 
       if (!result) {
         return helpersWrapper.response(
           res,
-          404,
-          `Data by id : ${userId} tidak ditemukan`,
-          null
+          400,
+          `Data by id : ${id} tidak ditemukan`,
+          []
         );
       }
 
@@ -237,16 +242,16 @@ module.exports = {
 
       const checkTicket = await bookingModel.getBookingById(id);
       if (!checkTicket.length) {
-        return helpersWrapper.response(res, 404, "Data tidak ditemukan", null);
+        return helpersWrapper.response(res, 200, "Data tidak ditemukan", []);
       }
 
       if (checkTicket[0].statusTicket !== "Active") {
         return helpersWrapper.response(res, 400, "Ticket already used", null);
       }
 
-      const result = await bookingModel.getStatusTicket("notActive", id);
+      await bookingModel.getStatusTicket("notActive", id);
 
-      return helpersWrapper.response(res, 200, "Success use ticket", result);
+      return helpersWrapper.response(res, 200, "Success use ticket");
     } catch (error) {
       return helpersWrapper.response(
         res,
@@ -274,7 +279,7 @@ module.exports = {
           dateBooking: moment(item.dateBooking).format("DD MMM"),
           timeBooking: moment(item.timeBooking, ["HH:mm"]).format("LT"),
           seat: bookingSeat,
-          link: `http:${req.get("host")}/status-ticket/${item.bookingId}`,
+          link: `http://${req.get("host")}/status-ticket/${item.bookingId}`,
         };
         tampung.push(newData);
       });

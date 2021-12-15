@@ -7,7 +7,7 @@ router.post("/register", authController.register);
 router.post("/activation", authController.activateEmail);
 router.post("/login", authController.login);
 router.post(
-  "refresh-token",
+  "/refresh-token",
   middlewareAuth.authentication,
   authController.refreshToken
 );

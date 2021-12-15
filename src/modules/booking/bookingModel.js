@@ -51,7 +51,7 @@ module.exports = {
   getBookingById: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, bs.seat FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId WHERE b.id = ${id}`,
+        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, bs.seat FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId WHERE b.id = "${id}"`,
         (error, result) => {
           if (!error) {
             resolve(result);
@@ -61,10 +61,10 @@ module.exports = {
         }
       );
     }),
-  getBookingByUserId: (userId) =>
+  getBookingByUserId: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, bs.seat FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId WHERE b.userId = ${userId}`,
+        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, b.statusTicket,  bs.seat, movie.name, schedule.premier FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId JOIN movie ON b.movieId = movie.id JOIN schedule ON b.scheduleId = schedule.id WHERE b.userId = "${id}"`,
         (error, result) => {
           if (!error) {
             resolve(result);

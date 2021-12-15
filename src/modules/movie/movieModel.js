@@ -16,12 +16,11 @@ module.exports = {
         }
       });
     }),
-  getMovies: (limit, offset, keyword, sortBy, sortType) =>
+  getMovies: (limit, offset, keyword, month, sortBy, sortType) =>
     // eslint-disable-next-line consistent-return
-    // - get by date
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT * FROM movie WHERE name LIKE "%${keyword}%" ORDER BY ${sortBy} ${sortType} LIMIT ? OFFSET ?`,
+        `SELECT * FROM movie WHERE name LIKE "%${keyword}%" AND MONTH(releaseDate) LIKE "%${month}%" ORDER BY ${sortBy} ${sortType} LIMIT ? OFFSET ?`,
         [limit, offset],
         (error, result) => {
           if (!error) {
