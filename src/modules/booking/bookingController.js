@@ -279,7 +279,7 @@ module.exports = {
           dateBooking: moment(item.dateBooking).format("DD MMM"),
           timeBooking: moment(item.timeBooking, ["HH:mm"]).format("LT"),
           seat: bookingSeat,
-          link: `http://${req.get("host")}/status-ticket/${item.bookingId}`,
+          link: `${process.env.BACKEND_URL}/status-ticket/${item.bookingId}`,
         };
         tampung.push(newData);
       });
@@ -306,7 +306,7 @@ module.exports = {
                   200,
                   "Success export ticket",
                   {
-                    url: `http://${req.get("host")}/generate/${fileName}`,
+                    url: `${process.env.BACKEND_URL}/generate/${fileName}`,
                   }
                 );
               });

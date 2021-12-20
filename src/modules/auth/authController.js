@@ -57,7 +57,6 @@ module.exports = {
         email,
         password: hashPassword,
         phoneNumber,
-        // avatar,
       };
 
       const activation = createActivationToken(setData);
