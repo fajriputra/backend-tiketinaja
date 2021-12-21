@@ -81,10 +81,12 @@ module.exports = {
     }),
   updateBooking: (data, id) =>
     new Promise((resolve, reject) => {
-      connection.query(
+      const query = connection.query(
         "UPDATE booking SET ? WHERE id = ?",
         [data, id],
         (error, result) => {
+          console.log(error);
+
           if (!error) {
             resolve(result);
           } else {
@@ -92,6 +94,7 @@ module.exports = {
           }
         }
       );
+      console.log(query.sql);
     }),
   getStatusTicket: (data, id) =>
     new Promise((resolve, reject) => {

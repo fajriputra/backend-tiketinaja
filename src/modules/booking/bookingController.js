@@ -78,7 +78,8 @@ module.exports = {
   },
   midtransNotif: async (req, res) => {
     try {
-      const result = await midtrans.notif(req.body);
+      console.log(req.body);
+      const result = await midtrans.midtransNotification(req.body);
       const {
         order_id: bookingId,
         transaction_status: transactionStatus,
@@ -93,6 +94,7 @@ module.exports = {
           // TODO set transaction status on your databaase to 'success'
           // [1]
           const setData = {
+            paymentMethod: result.payment_type,
             statusPayment: "success",
             statusTicket: "Active",
             updatedAt: new Date(Date.now()),
@@ -103,6 +105,7 @@ module.exports = {
         // TODO set transaction status on your databaase to 'success'
         // [1]
         const setData = {
+          paymentMethod: result.payment_type,
           statusPayment: "success",
           statusTicket: "Active",
           updatedAt: new Date(Date.now()),
@@ -119,6 +122,7 @@ module.exports = {
         // TODO set transaction status on your databaase to 'failure'
         // [1]
         const setData = {
+          paymentMethod: result.payment_type,
           statusPayment: "failed",
           statusTicket: "notActive",
           updatedAt: new Date(Date.now()),
@@ -129,6 +133,8 @@ module.exports = {
         // TODO set transaction status on your databaase to 'pending' / waiting payment
       }
     } catch (error) {
+      console.log(error.message);
+
       return helpersWrapper.response(
         res,
         400,
