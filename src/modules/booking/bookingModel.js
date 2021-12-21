@@ -4,12 +4,11 @@ module.exports = {
   storeBooking: (data) =>
     new Promise((resolve, reject) => {
       connection.query("INSERT INTO booking SET ?", data, (error, result) => {
-        const newResult = {
-          id: result.insertId,
-          ...data,
-        };
-
         if (!error) {
+          const newResult = {
+            id: result.insertId,
+            ...data,
+          };
           resolve(newResult);
         } else {
           reject(new Error(`SQL : ${error.sqlMessage}`));
