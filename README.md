@@ -102,6 +102,8 @@ To build a project that I created requires several dependencies / packages, such
 <!-- CONTACT -->
 ## Contact
 
-AL FAJRI PUTRA PRATAMA - [@fjri.p](https://instagram.com/fjri.p)
+AL FAJRI PUTRA PRATAMA 
+- Instagram : [@fjri.p](https://instagram.com/fjri.p)
+- Linkedin : [NodeJS](https://www.linkedin.com/in/fajriputra)
 
-PROJECT LINK [here](https://backend-tiketinaja.herokuapp.com)
+PROJECT LINK [here](https://backend-fajri.fwebdev2.xyz)
