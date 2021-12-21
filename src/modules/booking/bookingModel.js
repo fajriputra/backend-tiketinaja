@@ -3,26 +3,21 @@ const connection = require("../../config/database");
 module.exports = {
   storeBooking: (data) =>
     new Promise((resolve, reject) => {
-      const query = connection.query(
-        "INSERT INTO booking SET ?",
-        data,
-        (error, result) => {
-          if (!error) {
-            const newResult = {
-              id: result.insertId,
-              ...data,
-            };
-            resolve(newResult);
-          } else {
-            reject(new Error(`SQL : ${error.sqlMessage}`));
-          }
+      connection.query("INSERT INTO booking SET ?", data, (error, result) => {
+        if (!error) {
+          const newResult = {
+            id: result.insertId,
+            ...data,
+          };
+          resolve(newResult);
+        } else {
+          reject(new Error(`SQL : ${error.sqlMessage}`));
         }
-      );
-      console.log(query.sql);
+      });
     }),
   storeBookingSeat: (data) =>
     new Promise((resolve, reject) => {
-      const query = connection.query(
+      connection.query(
         "INSERT INTO bookingseat SET ?",
         data,
         (error, result) => {
@@ -37,7 +32,6 @@ module.exports = {
           }
         }
       );
-      console.log(query.sql);
     }),
 
   getAllSeatBooking: (scheduleId, movieId, dateSchedule, timeSchedule) =>
@@ -69,7 +63,7 @@ module.exports = {
   getBookingByUserId: (id) =>
     new Promise((resolve, reject) => {
       connection.query(
-        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, b.statusTicket,  bs.seat, movie.name, schedule.premier FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId JOIN movie ON b.movieId = movie.id JOIN schedule ON b.scheduleId = schedule.id WHERE b.userId = "${id}"`,
+        `SELECT b.id, b.userId, b.dateBooking, b.timeBooking, b.movieId, b.scheduleId, b.totalTicket, b.totalPayment, b.paymentMethod, b.statusPayment, b.statusTicket, b.urlRedirect, bs.seat, movie.name, schedule.premier FROM booking AS b JOIN bookingseat AS bs ON b.id = bs.bookingId JOIN movie ON b.movieId = movie.id JOIN schedule ON b.scheduleId = schedule.id WHERE b.userId = "${id}"`,
         (error, result) => {
           if (!error) {
             resolve(result);
@@ -81,12 +75,10 @@ module.exports = {
     }),
   updateBooking: (data, id) =>
     new Promise((resolve, reject) => {
-      const query = connection.query(
+      connection.query(
         "UPDATE booking SET ? WHERE id = ?",
         [data, id],
         (error, result) => {
-          console.log(error);
-
           if (!error) {
             resolve(result);
           } else {
@@ -94,7 +86,6 @@ module.exports = {
           }
         }
       );
-      console.log(query.sql);
     }),
   getStatusTicket: (data, id) =>
     new Promise((resolve, reject) => {
