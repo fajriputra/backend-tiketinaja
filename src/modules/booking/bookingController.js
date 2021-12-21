@@ -33,6 +33,7 @@ module.exports = {
         totalTicket,
         totalPayment: schedule[0].price * totalTicket.length,
         paymentMethod: "",
+        urlRedirect: "",
         statusPayment: "pending",
       };
 
