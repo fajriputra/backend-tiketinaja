@@ -6,6 +6,7 @@ const storage = multer.diskStorage({
     cb(null, "public/uploads/user");
   },
   filename(req, file, cb) {
+    console.log(file);
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
   },
 });
@@ -33,12 +34,7 @@ const uploadHandling = (req, res, next) => {
   upload(req, res, (err) => {
     if (err instanceof multer.MulterError) {
       // A Multer error occurred when uploading
-      return helpersWrapper.response(
-        res,
-        401,
-        "File too large. Max is 1mb",
-        null
-      );
+      return helpersWrapper.response(res, 401, err.message, null);
     }
     if (err) {
       // An unknown error occurred when uploading.
